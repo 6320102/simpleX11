@@ -1,12 +1,13 @@
 # simpleX11
 
-## Installation
+## インストール
 
-X11の開発用ライブラリをインストール
+Dockerでイメージをビルド
 ```
-sudo apt-get install libx11-dev
+docker build . -t x11
 ```
-## To Compile
+
+## コンパイル
 ```
 gcc -I/usr/include/X11 -L/usr/lib/x86_64-linux-gnu -o <name> xeyes.c -lX11 -lm
 ```
