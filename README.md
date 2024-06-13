@@ -2,10 +2,9 @@
 
 ## インストール
 
-Dockerでイメージをビルドしてコンテナを起動
+Dockerでイメージをビルド
 ```
 docker build . -t x11
-docker run --rm -it x11 bash
 ```
 
 ## コンパイル
