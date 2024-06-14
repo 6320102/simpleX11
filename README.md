@@ -24,5 +24,5 @@ gcc -I/usr/include/X11 -L/usr/lib/x86_64-linux-gnu -o <exe_file_name> <c_file_na
 ```
 
 ## TODO
-- xclient.c: リモートに送信する際に、ポインタではなくデータを送る
+- xserer.c? : データが遅れくるから欠落？
 - コンテンツに依らないサーバの構築
