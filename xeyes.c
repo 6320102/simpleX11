@@ -14,7 +14,7 @@ Window win;
 GC gc;
 XGCValues gcvals;
 Colormap cmap;
-XColor white, black, red;
+XColor white, black;
 
 void draw_eye(int x, int y, int w, int h, int mx, int my) {
     double dist, angle;
@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
 
     screen = DefaultScreen(dpy);
     cmap = DefaultColormap(dpy, screen);
+    // "white"/"black"から色を探してwhite,blackに割り当てる
     XAllocNamedColor(dpy, cmap, "white", &white, &white);
     XAllocNamedColor(dpy, cmap, "black", &black, &black);
 

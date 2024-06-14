@@ -5,17 +5,9 @@
 
 #define WIDTH 400
 #define HEIGHT 400
-#define PIXEL_SIZE 4 // RGBA
+#define PIXEL_SIZE 4 // BGRX
 
-void draw_rectangle(unsigned char *data, int width, int height) {
-    // 背景を黒に設定
-    for (int i = 0; i < width * height; i++) {
-        data[i * PIXEL_SIZE] = 0;   // Red
-        data[i * PIXEL_SIZE + 1] = 0; // Green
-        data[i * PIXEL_SIZE + 2] = 0; // Blue
-        data[i * PIXEL_SIZE + 3] = 0; // Alpha (opaque)
-    }
-
+void draw_rectangle(char *data, int width, int height) {
     // 四角形の左上と右下の座標を設定
     int rect_left = width / 4;
     int rect_top = height / 4;
@@ -26,10 +18,9 @@ void draw_rectangle(unsigned char *data, int width, int height) {
     for (int y = rect_top; y < rect_bottom; y++) {
         for (int x = rect_left; x < rect_right; x++) {
             int index = (y * width + x) * PIXEL_SIZE;
-            data[index] = 0;     // Red
-            data[index + 1] = 0xff; // Green
-            data[index + 2] = 0; // Blue
-            data[index + 3] = 0; // Alpha (opaque)
+            data[index] = x * 255 / width;     // B
+            data[index + 1] = y * 255 / height; // G
+            data[index + 2] = 0; // R
         }
     }
 }
@@ -39,7 +30,7 @@ int main() {
     struct sockaddr_in server_addr;
     int width = WIDTH;
     int height = HEIGHT;
-    unsigned char *pixel_data = malloc(width * height * PIXEL_SIZE);
+    char *pixel_data = malloc(width * height * PIXEL_SIZE);
 
     if (pixel_data == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
@@ -76,6 +67,8 @@ int main() {
         write(sockfd, pixel_data, width * height * PIXEL_SIZE) < 0) {
         perror("Failed to send data");
     }
+
+    printf("%d\n", (int)pixel_data[479596]);
 
     // 接続を閉じる
     close(sockfd);

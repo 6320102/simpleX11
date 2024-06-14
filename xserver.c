@@ -9,17 +9,27 @@
 #define PORT 12345
 #define PIXEL_SIZE 4 // RGBA
 
-void draw_image(Display *dpy, Window win, GC gc, unsigned char *pixel_data, int width, int height) {
-    for (int i = 0; i < width * height; i++) {
-        // printf("%d,%d,%d,%d ",pixel_data[i * PIXEL_SIZE],pixel_data[i * PIXEL_SIZE + 1],pixel_data[i * PIXEL_SIZE + 2], pixel_data[i * PIXEL_SIZE + 3]);
-        printf("%d ",pixel_data[i * PIXEL_SIZE]);
-    }
+void draw_image(Display *dpy, Window win, GC gc, char *pixel_data, int width, int height) {
+    printf("%d\n", (int)pixel_data[479596]);
+
     int screen = DefaultScreen(dpy);
-    XImage *image = XCreateImage(dpy, DefaultVisual(dpy, screen), DefaultDepth(dpy, screen), ZPixmap, 0, (char *)pixel_data, width, height, 32, width * PIXEL_SIZE);
+    XImage *image = XCreateImage(dpy, DefaultVisual(dpy, screen), DefaultDepth(dpy, screen), ZPixmap, 0, pixel_data, width, height, 32, width * PIXEL_SIZE);
 
     if (!image) {
         fprintf(stderr, "Failed to create XImage\n");
         return;
+    }
+
+    // イベントループ
+    XEvent event;
+    while (1) {
+        XNextEvent(dpy, &event);
+        // 何らかのイベント処理が必要な場合に記述
+        if (event.type == Expose) {
+            // ウィンドウの露出時に画像を描画
+            XPutImage(dpy, win, DefaultGC(dpy, screen), image, 0, 0, 0, 0, width, height);
+            XFlush(dpy);
+        }
     }
 
     XPutImage(dpy, win, gc, image, 0, 0, 0, 0, width, height);
@@ -32,7 +42,7 @@ int main() {
     struct sockaddr_in server_addr, client_addr;
     socklen_t addr_len = sizeof(client_addr);
     int width, height;
-    unsigned char *pixel_data = NULL;
+    char *pixel_data = NULL;
 
     // ソケット作成
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -89,8 +99,8 @@ int main() {
         }
 
         // メモリ割り当ての前に正しいデータサイズを確認
-        size_t pixel_data_size = width * height * PIXEL_SIZE; // Each pixel is RGBA (4 bytes)
-        pixel_data = (unsigned char *)malloc(pixel_data_size);
+        size_t pixel_data_size = width * height * PIXEL_SIZE; // Each pixel is RGBX (4 bytes)
+        pixel_data = malloc(pixel_data_size);
         if (pixel_data == NULL) {
             fprintf(stderr, "Memory allocation failed\n");
             close(newsockfd);
@@ -107,21 +117,15 @@ int main() {
         // ウィンドウを作成
         Window win = XCreateSimpleWindow(dpy, RootWindow(dpy, screen), 0, 0, width, height, 1, black_pixel, white_pixel);
         XMapWindow(dpy, win);
+        // どのイベントを受け付けるか決定
+        XSelectInput(dpy, win, ExposureMask);
         XFlush(dpy);
 
         // 受け取ったデータに基づいてイメージを描画
         draw_image(dpy, win, gc, pixel_data, width, height);
-        // クライアントからのデータ送信後、ウィンドウを閉じる
-        XFlush(dpy);
+        // クライアントからのデータをウィンドウマネージャへ送信後、ウィンドウを閉じる
         // free(pixel_data);
         close(newsockfd);
-    }
-
-    // イベントループ
-    XEvent event;
-    while (1) {
-        XNextEvent(dpy, &event);
-        // 何らかのイベント処理が必要な場合に記述
     }
 
     // クリーンアップ
