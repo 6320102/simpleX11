@@ -11,7 +11,7 @@ void draw_rectangle(unsigned char *data, int width, int height) {
     // 背景を黒に設定
     for (int i = 0; i < width * height; i++) {
         data[i * PIXEL_SIZE] = 0;   // Red
-        data[i * PIXEL_SIZE + 1] = 255; // Green
+        data[i * PIXEL_SIZE + 1] = 0; // Green
         data[i * PIXEL_SIZE + 2] = 0; // Blue
         data[i * PIXEL_SIZE + 3] = 0; // Alpha (opaque)
     }
@@ -26,10 +26,10 @@ void draw_rectangle(unsigned char *data, int width, int height) {
     for (int y = rect_top; y < rect_bottom; y++) {
         for (int x = rect_left; x < rect_right; x++) {
             int index = (y * width + x) * PIXEL_SIZE;
-            data[index] = 5;     // Red
-            data[index + 1] = 255; // Green
-            data[index + 2] = 255; // Blue
-            data[index + 3] = 255; // Alpha (opaque)
+            data[index] = 0;     // Red
+            data[index + 1] = 0xff; // Green
+            data[index + 2] = 0; // Blue
+            data[index + 3] = 0; // Alpha (opaque)
         }
     }
 }

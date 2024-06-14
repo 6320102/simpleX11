@@ -1,16 +1,3 @@
-/*
- * xeyes.c - a follow the mouse program
- *
- * originally written by 
- *    Jeremy Huxtable
- * modified for X11 by 
- *    Stuart W. Marks
- * modified for X11R4 by 
- *    Keith Packard
- * modified for ANSI C and other minor improvements by 
- *    Michael D. Berger
- */
-
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xos.h>

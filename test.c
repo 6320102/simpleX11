@@ -46,10 +46,10 @@ void draw_rectangle(unsigned char *data, int width, int height) {
     for (int y = rect_top; y < rect_bottom; y++) {
         for (int x = rect_left; x < rect_right; x++) {
             int index = (y * width + x) * PIXEL_SIZE;
-            data[index] = 5;     // Red
+            data[index] = 255;     // Red
             data[index + 1] = 255; // Green
-            data[index + 2] = 255; // Blue
-            data[index + 3] = 255; // Alpha (opaque)
+            data[index + 2] = 0; // Blue
+            data[index + 3] = 0; // Alpha (opaque)
         }
     }
 }
