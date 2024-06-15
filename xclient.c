@@ -67,9 +67,7 @@ int main() {
         write(sockfd, pixel_data, width * height * PIXEL_SIZE) < 0) {
         perror("Failed to send data");
     }
-
-    printf("%d\n", (int)pixel_data[479596]);
-
+    
     // 接続を閉じる
     close(sockfd);
     free(pixel_data);

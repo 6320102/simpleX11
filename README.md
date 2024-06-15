@@ -22,6 +22,3 @@ make clean
 ```
 gcc -I/usr/include/X11 -L/usr/lib/x86_64-linux-gnu -o <exe_file_name> <c_file_name> -lX11 -lm
 ```
-
-## TODO
-- コンテンツに依らないサーバの構築

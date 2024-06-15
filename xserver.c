@@ -10,8 +10,6 @@
 #define PIXEL_SIZE 4 // RGBA
 
 void draw_image(Display *dpy, Window win, GC gc, char *pixel_data, int width, int height) {
-    printf("%d\n", (int)pixel_data[479596]);
-
     int screen = DefaultScreen(dpy);
     XImage *image = XCreateImage(dpy, DefaultVisual(dpy, screen), DefaultDepth(dpy, screen), ZPixmap, 0, pixel_data, width, height, 32, width * PIXEL_SIZE);
 
@@ -118,6 +116,7 @@ int main() {
                 perror("Failed to receive pixel data");
                 break;
             }
+            printf("%d bytes received\n", bytes_received);
             total_received += bytes_received;
         }
 
