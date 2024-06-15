@@ -24,11 +24,3 @@ make clean
 個別に実行可能ファイルを作る場合:
 ```
 gcc -I/usr/include/X11 -L/usr/lib/x86_64-linux-gnu -o <exe_file_name> <c_file_name> -lX11 -lm
-<<<<<<< HEAD
-```
-=======
-```
-
-## TODO
-- コンテンツに依らないサーバの構築
->>>>>>> c5a6eb361943cbee737c229ca3aea864e49c9710
