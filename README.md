@@ -1,4 +1,7 @@
 # simpleX11
+X Window Systemのネットワーク上の処理をXlibを用いて実装
+
+具体的には、clientからserverに対してデータを送信し、serverがウィンドウマネージャに対して描画処理を依頼する。
 
 ## インストール
 
