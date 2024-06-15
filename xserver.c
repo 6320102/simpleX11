@@ -107,12 +107,20 @@ int main() {
             continue;
         }
 
-        if (read(newsockfd, pixel_data, pixel_data_size) <= 0) {
-            perror("Failed to receive pixel data");
-            free(pixel_data);
-            close(newsockfd);
-            continue;
+        // パケット分割の処理
+        int total_received = 0;
+        int bytes_left = width * height * PIXEL_SIZE;
+        int bytes_received;
+
+        while (total_received < bytes_left) {
+            bytes_received = read(newsockfd, pixel_data + total_received, bytes_left - total_received);
+            if (bytes_received <= 0) {
+                perror("Failed to receive pixel data");
+                break;
+            }
+            total_received += bytes_received;
         }
+
 
         // ウィンドウを作成
         Window win = XCreateSimpleWindow(dpy, RootWindow(dpy, screen), 0, 0, width, height, 1, black_pixel, white_pixel);
