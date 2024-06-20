@@ -4,8 +4,8 @@
 #include <math.h>
 #include <arpa/inet.h>
 
-#define WIDTH 400
-#define HEIGHT 400
+#define WIDTH 800
+#define HEIGHT 800
 #define PIXEL_SIZE 4 // BGRX
 
 void draw_rectangle(char *data, int width, int height) {
