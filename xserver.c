@@ -53,7 +53,7 @@ int main(int argc, char const *argv[]) {
     }
     // サーバーアドレスとポートを設定
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(argv[1]);
+    server_addr.sin_port = htons(atoi(argv[1]));
     server_addr.sin_addr.s_addr = INADDR_ANY;
 
     // ソケットバインド

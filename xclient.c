@@ -101,7 +101,7 @@ int main(int argc, char const *argv[]) {
     // サーバーアドレスとポートを設定
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = inet_addr(argv[1]);
-    server_addr.sin_port = htons(argv[2]);
+    server_addr.sin_port = htons(atoi(argv[2]));
 
     // ソケット作成
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
