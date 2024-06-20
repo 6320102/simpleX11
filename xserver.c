@@ -6,7 +6,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
-#define PORT 12345
 #define PIXEL_SIZE 4 // RGBA
 
 void draw_image(Display *dpy, Window win, GC gc, char *pixel_data, int width, int height) {
@@ -35,7 +34,7 @@ void draw_image(Display *dpy, Window win, GC gc, char *pixel_data, int width, in
     XDestroyImage(image);
 }
 
-int main() {
+int main(int argc, char const *argv[]) {
     int sockfd, newsockfd;
     struct sockaddr_in server_addr, client_addr;
     socklen_t addr_len = sizeof(client_addr);
@@ -49,9 +48,12 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
+    if(argc != 1){
+        printf("引数はポート番号\n");
+    }
     // サーバーアドレスとポートを設定
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(PORT);
+    server_addr.sin_port = htons(argv[1]);
     server_addr.sin_addr.s_addr = INADDR_ANY;
 
     // ソケットバインド

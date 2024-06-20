@@ -83,7 +83,7 @@ void draw_color(char *data, int width, int height) {
     }
 }
 
-int main() {
+int main(int argc, char const *argv[]) {
     int sockfd;
     struct sockaddr_in server_addr;
     int width = WIDTH;
@@ -95,10 +95,13 @@ int main() {
         return 1;
     }
 
+    if(argc != 2) {
+        printf("引数はIP ポート番号\n");
+    }
     // サーバーアドレスとポートを設定
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(12345);
-    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    server_addr.sin_addr.s_addr = inet_addr(argv[1]);
+    server_addr.sin_port = htons(argv[2]);
 
     // ソケット作成
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
