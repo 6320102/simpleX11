@@ -48,7 +48,7 @@ int main(int argc, char const *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    if(argc != 1){
+    if(argc != 2){
         printf("引数はポート番号\n");
     }
     // サーバーアドレスとポートを設定

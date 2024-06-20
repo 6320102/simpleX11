@@ -95,7 +95,7 @@ int main(int argc, char const *argv[]) {
         return 1;
     }
 
-    if(argc != 2) {
+    if(argc != 3) {
         printf("引数はIP ポート番号\n");
     }
     // サーバーアドレスとポートを設定
